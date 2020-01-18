@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
@@ -18,6 +19,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -112,28 +114,29 @@ public class MobJarBlockItem extends BlockItem {
 
     @Override
     public boolean useOnEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand) {
-        if (stack.getItem() == MobJar.MOB_JAR.asItem()) {
-            ItemStack newItem = null;
-            CompoundTag entityInfo = new CompoundTag();
-            CompoundTag entityTag = new CompoundTag();
-            if (!stack.hasTag()) {
-                newItem = new ItemStack(MobJar.MOB_JAR.asItem());
-                entity.toTag(entityTag);
-                entityInfo.putString("entityName", entity.getType().getName().getString());
-                if (entityTag.contains("CustomName")){entityInfo.putString("customName",entity.getDisplayName().asFormattedString());}
-                entityInfo.putString("entityId", Registry.ENTITY_TYPE.getId(entity.getType()).toString());
-                entityInfo.put("entityData", entityTag);
-                newItem.setTag(entityInfo);
-                entity.removed = true;
-                stack.decrement(1);
+        ItemStack newItem = null;
+        CompoundTag entityInfo = new CompoundTag();
+        CompoundTag entityTag = new CompoundTag();
+        if (!stack.hasTag()) {
+            newItem = new ItemStack(MobJar.MOB_JAR.asItem());
+            entity.toTag(entityTag);
+            entityInfo.putString("entityName", entity.getType().getName().getString());
+            if (entityTag.contains("CustomName")) {
+                entityInfo.putString("customName", entity.getDisplayName().asFormattedString());
             }
-            if (newItem != null) {
-                if (stack.isEmpty()) {
-                    player.setStackInHand(hand, newItem);
-                } else player.inventory.offerOrDrop(player.getEntityWorld(),newItem);
-            }
+            entityInfo.putString("entityId", Registry.ENTITY_TYPE.getId(entity.getType()).toString());
+            entityInfo.put("entityData", entityTag);
+            newItem.setTag(entityInfo);
+            entity.damage(DamageSource.GENERIC, 0.1f);
+            entity.removed = true;
+            stack.decrement(1);
         }
-        return true;
+        if (newItem != null) {
+            player.inventory.offerOrDrop(player.getEntityWorld(), newItem);
+            player.playSound(SoundEvents.ITEM_BOTTLE_FILL_DRAGONBREATH, 50, 1);
+            return true;
+        }
+        return false;
     }
 
     @Override
