@@ -31,7 +31,6 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class MobJarBlockItem extends BlockItem {
-    public boolean isEmpty = true;
 
     public MobJarBlockItem(Block block, Settings settings) {
         super(block, settings);
@@ -103,11 +102,11 @@ public class MobJarBlockItem extends BlockItem {
                             .append(": ")
                             .append(new LiteralText("\""+stack.getTag().getString("entityId")+"\"").formatted(Formatting.BLUE)));
                 }
-                isEmpty = false;
             } else {
                 text.add(new TranslatableText("mobjar.mobjar.empty_tooltip").formatted(Formatting.GRAY));
-                isEmpty = true;
             }
+            text.add(new TranslatableText("mobjar.mobjar.break_tooltip").formatted(Formatting.DARK_GRAY,Formatting.ITALIC));
+            text.add(new TranslatableText("mobjar.mobjar.break_tooltip_ps").formatted(Formatting.DARK_GRAY,Formatting.ITALIC));
         }
     }
 
@@ -117,8 +116,7 @@ public class MobJarBlockItem extends BlockItem {
             ItemStack newItem = null;
             CompoundTag entityInfo = new CompoundTag();
             CompoundTag entityTag = new CompoundTag();
-            MobJarBlockItem theItem = (MobJarBlockItem) stack.getItem();
-            if (theItem.isEmpty) {
+            if (!stack.hasTag()) {
                 newItem = new ItemStack(MobJar.MOB_JAR.asItem());
                 entity.toTag(entityTag);
                 entityInfo.putString("entityName", entity.getType().getName().getString());
@@ -134,9 +132,8 @@ public class MobJarBlockItem extends BlockItem {
                     player.setStackInHand(hand, newItem);
                 } else player.inventory.offerOrDrop(player.getEntityWorld(),newItem);
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
     @Override

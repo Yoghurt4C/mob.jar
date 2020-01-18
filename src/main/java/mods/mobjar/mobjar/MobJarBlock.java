@@ -27,24 +27,13 @@ public class MobJarBlock extends Block implements BlockEntityProvider {
         if (!world.isClient()) {
             MobJarBlockEntity be =  (MobJarBlockEntity) world.getBlockEntity(pos);
             if (be != null) {
-                if (be.getMyEntityType() != null) {
-                    if (player.isSneaking()){
-                        ItemStack stack = new ItemStack(this.asItem());
-                        stack.getOrCreateTag().putString("entityId",be.getMyEntityType().toString());
-                        stack.getOrCreateTag().putString("entityName",be.getEntityName());
-                        if (be.getCustomName()!=null){
-                            stack.getOrCreateTag().putString("customName",be.getCustomName());
-                        }
-                        stack.putSubTag("entityData",be.getMyEntityData());
-                        dropStack(world,pos,stack);
-                    } else {
-                        Entity myEntity = Registry.ENTITY_TYPE.get(be.getMyEntityType()).create(world);
-                        assert myEntity != null;
-                        myEntity.fromTag(be.getMyEntityData());
-                        myEntity.setPosition(pos.getX(), pos.getY(), pos.getZ());
-                        world.spawnEntity(myEntity);
-                        super.onBreak(world,pos,state,player);
-                    }
+                if (be.getMyEntityType() != null && !player.isSneaking()) {
+                    Entity myEntity = Registry.ENTITY_TYPE.get(be.getMyEntityType()).create(world);
+                    assert myEntity != null;
+                    myEntity.fromTag(be.getMyEntityData());
+                    myEntity.setPosition(pos.getX(), pos.getY(), pos.getZ());
+                    world.spawnEntity(myEntity);
+                    super.onBreak(world, pos, state, player);
                 }
             }
         }

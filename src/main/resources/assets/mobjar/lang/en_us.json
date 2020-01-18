@@ -4,5 +4,7 @@
     "mobjar.mobjar.empty_tooltip": "Empty",
     "mobjar.mobjar.type_tooltip": "Mob Type",
     "mobjar.mobjar.hp_tooltip": "Health",
-    "mobjar.mobjar.id_tooltip": "Entity ID"
+    "mobjar.mobjar.id_tooltip": "Entity ID",
+    "mobjar.mobjar.break_tooltip": "Break while sneaking to",
+    "mobjar.mobjar.break_tooltip_ps": "keep the mob inside."
 }

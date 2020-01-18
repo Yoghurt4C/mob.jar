@@ -1,5 +1,6 @@
 package mods.mobjar.mixins;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import mods.mobjar.MobJar;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.lwjgl.opengl.GL13;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,7 +33,7 @@ public class MobJarBlockItemRendererMixin {
                 Identifier entityType = new Identifier(stack.getTag().getString("entityId"));
                 CompoundTag entityTag = stack.getSubTag("entityData");
                 matrices.push();
-                //RenderSystem.glMultiTexCoord2f(GL13.GL_TEXTURE1, (float) (light & 0xFFFF), (float) ((light >> 16) & 0xFFFF));
+                RenderSystem.glMultiTexCoord2f(GL13.GL_TEXTURE1, (float) (light & 0xFFFF), (float) ((light >> 16) & 0xFFFF));
                 Entity entityToRender = Registry.ENTITY_TYPE.get(entityType).create(client.world);
                 entityToRender.setWorld(client.world);
                 entityToRender.fromTag(entityTag);
