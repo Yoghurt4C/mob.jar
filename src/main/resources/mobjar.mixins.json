@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "mods.mobjar.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "FoxGoalMixin",
+    "MobJarBlockItemRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

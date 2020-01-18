@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "mobjar",
+  "version": "${version}",
+
+  "name": "mob.jar",
+  "description": "a jar for mob",
+  "authors": [
+    "hoborific"
+  ],
+  "contact": {
+    "homepage": "fecalfunny.com",
+    "sources": ""
+  },
+
+  "license": "MMPL-J 1.0",
+  "icon": "assets/mobjar/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "mods.mobjar.MobJar"
+    ],
+    "client": [
+      "mods.mobjar.MobJarClient"
+    ]
+  },
+  "mixins": [
+    "mobjar.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.2",
+    "fabric": "*",
+    "minecraft": "1.15.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
