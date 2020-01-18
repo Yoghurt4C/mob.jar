@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
@@ -18,6 +19,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -31,7 +33,6 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class MobJarBlockItem extends BlockItem {
-    public boolean isEmpty = true;
 
     public MobJarBlockItem(Block block, Settings settings) {
         super(block, settings);
@@ -103,22 +104,19 @@ public class MobJarBlockItem extends BlockItem {
                             .append(": ")
                             .append(new LiteralText("\""+stack.getTag().getString("entityId")+"\"").formatted(Formatting.BLUE)));
                 }
-                isEmpty = false;
             } else {
-                text.add(new TranslatableText("mobjar.mobjar.empty_tooltip").formatted(Formatting.GRAY));
-                isEmpty = true;
+                text.add(new TranslatableText("mobjar.mobjar.empty_tooltip").formatted(Formatting.GRAY));;
             }
         }
     }
 
     @Override
     public boolean useOnEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand) {
-        if (stack.getItem() == MobJar.MOB_JAR.asItem()) {
             ItemStack newItem = null;
             CompoundTag entityInfo = new CompoundTag();
             CompoundTag entityTag = new CompoundTag();
             MobJarBlockItem theItem = (MobJarBlockItem) stack.getItem();
-            if (theItem.isEmpty) {
+            if (!stack.hasTag()) {
                 newItem = new ItemStack(MobJar.MOB_JAR.asItem());
                 entity.toTag(entityTag);
                 entityInfo.putString("entityName", entity.getType().getName().getString());
@@ -126,18 +124,17 @@ public class MobJarBlockItem extends BlockItem {
                 entityInfo.putString("entityId", Registry.ENTITY_TYPE.getId(entity.getType()).toString());
                 entityInfo.put("entityData", entityTag);
                 newItem.setTag(entityInfo);
+                entity.damage(DamageSource.GENERIC,0.1f);
                 entity.removed = true;
                 stack.decrement(1);
             }
             if (newItem != null) {
-                if (stack.isEmpty()) {
-                    player.setStackInHand(hand, newItem);
-                } else player.inventory.offerOrDrop(player.getEntityWorld(),newItem);
+                player.inventory.offerOrDrop(player.getEntityWorld(),newItem);
+                player.playSound(SoundEvents.ITEM_BOTTLE_FILL_DRAGONBREATH,50,1);
+
             }
-            return true;
+            return false;
         }
-        return false;
-    }
 
     @Override
     public ActionResult place(ItemPlacementContext placementContext) {
