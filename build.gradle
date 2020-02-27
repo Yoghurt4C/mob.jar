@@ -7,10 +7,19 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
-version = project.mod_version
+version = project.mod_version+"+"+project.minecraft_version
 //group = project.maven_group
 
 minecraft {
+}
+
+repositories {
+	maven { url = "https://maven.fabricmc.net/" }
+	maven { url = "https://jitpack.io" }
+	
+	flatDir {
+	  dirs "libs"
+	}
 }
 
 dependencies {
@@ -24,6 +33,13 @@ dependencies {
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
+	modCompile "io.github.prospector:modmenu:${project.mod_menu_version}"
+	modCompile ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") { exclude(module: "ModMenu") }
+	implementation 'org.jetbrains:annotations:15.0'
+	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+	
+	modCompile "ninjaphenix.ninjatips:NinjaTips:1.0.31.15"
+	modCompile "java.io.github.giantnuker.fabric.tooltipwrap:tooltipwrap:1.0.2"
 }
 
 processResources {

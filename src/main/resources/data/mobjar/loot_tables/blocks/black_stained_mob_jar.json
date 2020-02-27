@@ -1,0 +1,79 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "mobjar:black_stained_mob_jar",
+              "functions": [
+                {
+                  "function": "copy_nbt",
+                  "source": "block_entity",
+                  "ops": [
+                    {
+                      "source": "entityName",
+                      "target": "entityName",
+                      "op": "replace"
+                    },
+                    {
+                      "source": "customName",
+                      "target": "customName",
+                      "op": "replace"
+                    },
+                    {
+                      "source": "entityId",
+                      "target": "entityId",
+                      "op": "replace"
+                    },
+                    {
+                      "source": "entityData",
+                      "target": "entityData",
+                      "op": "replace"
+                    }
+                  ]
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "flags": {
+                      "is_sneaking": "true"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "mobjar:black_stained_mob_jar",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "flags": {
+                      "is_sneaking": "false"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

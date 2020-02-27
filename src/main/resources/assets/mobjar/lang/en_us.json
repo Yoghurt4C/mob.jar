@@ -1,5 +1,23 @@
 {
+    "itemGroup.mobjar.core_group": "mob.jar",
+
     "block.mobjar.mob_jar": "Mob Jar",
+    "block.mobjar.white_stained_mob_jar": "White Stained Mob Jar",
+    "block.mobjar.orange_stained_mob_jar": "Orange Stained Mob Jar",
+    "block.mobjar.magenta_stained_mob_jar": "Magenta Stained Mob Jar",
+    "block.mobjar.light_blue_stained_mob_jar": "Light Blue Stained Mob Jar",
+    "block.mobjar.yellow_stained_mob_jar": "Yellow Stained Mob Jar",
+    "block.mobjar.lime_stained_mob_jar": "Lime Stained Mob Jar",
+    "block.mobjar.pink_stained_mob_jar": "Pink Stained Mob Jar",
+    "block.mobjar.gray_stained_mob_jar": "Gray Stained Mob Jar",
+    "block.mobjar.light_gray_stained_mob_jar": "Light Gray Stained Mob Jar",
+    "block.mobjar.cyan_stained_mob_jar": "Cyan Stained Mob Jar",
+    "block.mobjar.purple_stained_mob_jar": "Purple Stained Mob Jar",
+    "block.mobjar.blue_stained_mob_jar": "Blue Stained Mob Jar",
+    "block.mobjar.brown_stained_mob_jar": "Brown Stained Mob Jar",
+    "block.mobjar.green_stained_mob_jar": "Green Stained Mob Jar",
+    "block.mobjar.red_stained_mob_jar": "Red Stained Mob Jar",
+    "block.mobjar.black_stained_mob_jar": "Black Stained Mob Jar",
 
     "mobjar.mobjar.empty_tooltip": "Empty",
     "mobjar.mobjar.type_tooltip": "Mob Type",

@@ -1,0 +1,7 @@
+{
+	"parent": "mobjar:block/mob_jar",
+	"textures": {
+		"0": "minecraft:block/white_stained_glass",
+		"particle": "minecraft:block/white_stained_glass"
+	}
+}
