@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "G G",
+    "GGG"
+  ],
+  "key": {
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "G": {
+      "item": "minecraft:cyan_stained_glass"
+    }
+  },
+  "result": {
+    "item": "mobjar:cyan_stained_mob_jar"
+  }
+}

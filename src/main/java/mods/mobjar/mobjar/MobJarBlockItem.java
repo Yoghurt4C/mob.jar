@@ -1,6 +1,5 @@
 package mods.mobjar.mobjar;
 
-import mods.mobjar.MobJar;
 import net.minecraft.advancement.criterion.Criterions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -118,7 +117,7 @@ public class MobJarBlockItem extends BlockItem {
         CompoundTag entityInfo = new CompoundTag();
         CompoundTag entityTag = new CompoundTag();
         if (!stack.hasTag()) {
-            newItem = new ItemStack(MobJar.MOB_JAR.asItem());
+            newItem = new ItemStack(stack.getItem());
             entity.toTag(entityTag);
             entityInfo.putString("entityName", entity.getType().getName().getString());
             if (entityTag.contains("CustomName")) {

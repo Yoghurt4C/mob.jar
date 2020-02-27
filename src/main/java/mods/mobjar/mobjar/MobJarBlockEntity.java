@@ -6,10 +6,9 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.registry.Registry;
 
-public class MobJarBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable {
+public class MobJarBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
 
     private Entity entity;
     private Identifier myEntityType;
@@ -46,9 +45,6 @@ public class MobJarBlockEntity extends BlockEntity implements BlockEntityClientS
         if (entity == null) {
             if (myEntityType != null) {
                 entity = Registry.ENTITY_TYPE.get(myEntityType).create(world);
-                if(!world.isClient()){
-                    world.getServer().getWorld(entity.dimension).spawnEntity(entity);
-                }
                 if(entity != null) {
                     entity.fromTag(entityData);
                     initializeTasks(entity);
@@ -77,6 +73,7 @@ public class MobJarBlockEntity extends BlockEntity implements BlockEntityClientS
         return this.toTag(tag);
     }
 
+    /*
     public void tick() {
         if (entity != null) {
             //entity.getMoveControl().tick();
@@ -86,4 +83,5 @@ public class MobJarBlockEntity extends BlockEntity implements BlockEntityClientS
             }
         }
     }
+     */
 }
